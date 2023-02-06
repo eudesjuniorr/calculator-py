@@ -56,5 +56,4 @@ def divisao(num1_entry, num2_entry, resultado_label):
     resultado_label.config(text=resultado)
     
 # executável
-
 janela.mainloop()
