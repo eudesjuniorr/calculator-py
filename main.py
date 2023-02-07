@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 # graphic interface
 
@@ -18,24 +19,26 @@ num2_label = tk.Label(janela, text="Número 2")
 num2_label.grid(row=1, column=0, sticky="E")
 
 # outputs
-resultado_label = tk.Label(janela, text="Resultado")
-resultado_label.grid(row=2, column=0, sticky="E")
+resultado_label = tk.Label(janela, width=20, height=2, anchor="center")
+resultado_label.grid(row=2, column=1, pady=10, padx=(20,0), sticky="nsew")
+resultado_title = tk.Label(janela, text="Resultado:")
+resultado_title.grid(row=2, column=0, sticky="E")
 
 # buttons
-botao_soma = tk.Button(janela, text="+", command=lambda: soma(num1_entry, num2_entry, resultado_label))
+botao_soma = ttk.Button(janela, text="+", command=lambda: soma(num1_entry, num2_entry, resultado_label))
 botao_soma.grid(row=0, column=2)
 
-botao_subtracao = tk.Button(janela, text="-", command=lambda: subtracao(num1_entry, num2_entry, resultado_label))
+botao_subtracao = ttk.Button(janela, text="-", command=lambda: subtracao(num1_entry, num2_entry, resultado_label))
 botao_subtracao.grid(row=1, column=2)
 
-botao_multiplicacao = tk.Button(janela, text="*", command=lambda: multiplicacao(num1_entry, num2_entry, resultado_label))
+botao_multiplicacao = ttk.Button(janela, text="*", command=lambda: multiplicacao(num1_entry, num2_entry, resultado_label))
 botao_multiplicacao.grid(row=0, column=3, padx=10)
 
-botao_divisao = tk.Button(janela, text="/", command=lambda: divisao(num1_entry, num2_entry, resultado_label))
+botao_divisao = ttk.Button(janela, text="/", command=lambda: divisao(num1_entry, num2_entry, resultado_label))
 botao_divisao.grid(row=1, column=3, padx=10)
 
-botao_radiciacao = tk.Button(janela, text="^", command=lambda: radiciacao(num1_entry, num2_entry, resultado_label))
-botao_radiciacao.grid(row=2, column=2, padx=10)
+botao_radiciacao = ttk.Button(janela, text="^", command=lambda: radiciacao(num1_entry, num2_entry, resultado_label))
+botao_radiciacao.grid(row=0, column=4, padx=10)
 
 # centralize the widgets
 janela.columnconfigure(0, weight=3)
@@ -47,7 +50,7 @@ janela.rowconfigure(2, weight=3)
 janela.rowconfigure(3, weight=3)
 
 # definir tamanho inicial da janela
-janela.geometry("300x250")
+janela.geometry("600x250")
 
 # evitar que o usuário ajuste o tamanho da janela
 janela.resizable(False, False)
@@ -81,6 +84,8 @@ def radiciacao(num1_entry, num2_entry, resultado_label):
     num1 = int(num1_entry.get())
     num2 = int(num2_entry.get())
     resultado = num1 ** num2
+    if abs(resultado) > 1e10:
+        resultado = "{:.2e}".format(resultado)
     resultado_label.config(text=resultado)
 
 # executável
