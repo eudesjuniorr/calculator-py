@@ -83,8 +83,10 @@ def divisao(num1_entry, num2_entry, resultado_label):
 def radiciacao(num1_entry, num2_entry, resultado_label):
     num1 = int(num1_entry.get())
     num2 = int(num2_entry.get())
+    if num2 > 308:
+        return resultado_label.config(text='tende ao infinito')
     resultado = num1 ** num2
-    if abs(resultado) > 1e10:
+    if abs(resultado) > 1e3:
         resultado = "{:.2e}".format(resultado)
     resultado_label.config(text=resultado)
 
