@@ -34,6 +34,9 @@ botao_multiplicacao.grid(row=0, column=3, padx=10)
 botao_divisao = tk.Button(janela, text="/", command=lambda: divisao(num1_entry, num2_entry, resultado_label))
 botao_divisao.grid(row=1, column=3, padx=10)
 
+botao_radiciacao = tk.Button(janela, text="^", command=lambda: radiciacao(num1_entry, num2_entry, resultado_label))
+botao_radiciacao.grid(row=2, column=2, padx=10)
+
 # centralize the widgets
 janela.columnconfigure(0, weight=3)
 janela.columnconfigure(1, weight=3)
@@ -73,6 +76,12 @@ def divisao(num1_entry, num2_entry, resultado_label):
     num2 = int(num2_entry.get())
     resultado = num1 / num2
     resultado_label.config(text=resultado)
-    
+
+def radiciacao(num1_entry, num2_entry, resultado_label):
+    num1 = int(num1_entry.get())
+    num2 = int(num2_entry.get())
+    resultado = num1 ** num2
+    resultado_label.config(text=resultado)
+
 # executável
 janela.mainloop()
