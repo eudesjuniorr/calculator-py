@@ -19,8 +19,10 @@ num2_label = tk.Label(janela, text="Número 2")
 num2_label.grid(row=1, column=0, sticky="E")
 
 # outputs
-resultado_label = tk.Label(janela, width=20, height=2, anchor="center")
-resultado_label.grid(row=2, column=1, pady=10, padx=(20,0), sticky="nsew")
+frame = tk.Frame(janela, bd=1, relief="sunken", width=10, height=10)
+frame.grid(row=2, column=1, pady=10, padx=(20,0), sticky="nsew")
+resultado_label = tk.Label(frame, width=20, height=2, anchor="center")
+resultado_label.pack(fill="both", expand=True)
 resultado_title = tk.Label(janela, text="Resultado:")
 resultado_title.grid(row=2, column=0, sticky="E")
 
