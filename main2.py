@@ -14,9 +14,9 @@ def add_number(number):
 def number_negative_positive(): # inverts the sign of the number
     current = number_input.get()
     if "-" in str(current):
-        number_input.set(str(current).replace("-", ""))
+        number_input.set((str(current).replace("-", "")))
     else:
-        number_input.set("-" + str(current))
+        number_input.set(("-" + str(current)))
 
 def button_add():
     first_number = float(number_input.get())
@@ -107,8 +107,11 @@ def button_log():
         number_input.set(mt.log(f_num, 10))
 
 def button_equal(): # calculates the result
-    second_number = float(number_input.get().split(" ")[2])
-    number_input.set(calculate(f_num, second_number, math))
+    if number_input.get() == "" or number_input.get() == "." or number_input.get() == "-": # if the user doesn't type anything or just a dot, the function returns None
+        return None
+    else:
+        second_number = float(number_input.get().split(" ")[2])
+        number_input.set(calculate(f_num, second_number, math))
 
 def calculate(f_num, second_number, math): # function that calculates the result
     if math == "addition":
