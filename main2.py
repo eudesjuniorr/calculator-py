@@ -19,99 +19,139 @@ def number_negative_positive(): # inverts the sign of the number
         number_input.set(("-" + str(current)))
 
 def button_add():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "addition"
-    f_num = first_number
-    number_input.set(str(f_num) + " + ")
-
-def button_subtract():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "subtraction"
-    f_num = first_number
-    number_input.set(str(f_num) + " - ")
-
-def button_multiply():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "multiplication"
-    f_num = first_number
-    number_input.set(str(f_num) + " * ")
-
-def button_divide():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "division"
-    f_num = first_number
-    number_input.set(str(f_num) + " / ")
-
-def button_exponentiation():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "exponentiation"
-    f_num = first_number
-    number_input.set(str(f_num) + " ^ ")
-
-def button_radication():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "radication"
-    f_num = first_number
-    number_input.set(str(f_num) + " √ ")
-
-def button_percent():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "percent"
-    f_num = first_number
-    number_input.set(str(f_num) + " % ")
-
-def button_fraction():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "fraction"
-    f_num = first_number
-    number_input.set(1 / f_num)
-
-def button_factorial():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "factorial"
-    f_num = first_number
-    number_input.set(1)
-    if f_num < 0:
-        number_input.set("Não existe fatorial de número negativo")
-    else:
-        for i in range(1, int(f_num) + 1):
-            number_input.set(int(number_input.get()) * i)
-
-def button_log():
-    first_number = float(number_input.get())
-    global f_num
-    global math
-    math = "log"
-    f_num = first_number
-    if f_num < 0:
-        number_input.set("O resultado é um número complexo")
-    else:
-        number_input.set(mt.log(f_num, 10))
-
-def button_equal(): # calculates the result
-    if number_input.get() == "" or number_input.get() == "." or number_input.get() == "-": # if the user doesn't type anything or just a dot, the function returns None
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
     else:
-        second_number = float(number_input.get().split(" ")[2])
-        number_input.set(calculate(f_num, second_number, math))
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "addition"
+        f_num = first_number
+        number_input.set(str(f_num) + " + ")
+
+def button_subtract():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "subtraction"
+        f_num = first_number
+        number_input.set(str(f_num) + " - ")
+
+def button_multiply():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "multiplication"
+        f_num = first_number
+        number_input.set(str(f_num) + " * ")
+
+def button_divide():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "division"
+        f_num = first_number
+        number_input.set(str(f_num) + " / ")
+
+def button_exponentiation():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "exponentiation"
+        f_num = first_number
+        number_input.set(str(f_num) + " ^ ")
+
+def button_radication():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "radication"
+        f_num = first_number
+        number_input.set(str(f_num) + " √ ")
+
+def button_percent():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "percent"
+        f_num = first_number
+        number_input.set(str(f_num) + " % ")
+
+def button_fraction():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "fraction"
+        f_num = first_number
+        number_input.set(1 / f_num)
+
+def button_factorial():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "factorial"
+        f_num = first_number
+        number_input.set(1)
+        if f_num < 0:
+            number_input.set("Não existe fatorial de número negativo")
+        else:
+            for i in range(1, int(f_num) + 1):
+                number_input.set(int(number_input.get()) * i)
+
+def button_log():
+    if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
+        return None
+    else:
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "log"
+        f_num = first_number
+        if f_num < 0:
+            number_input.set("O resultado é um número complexo")
+        else:
+            number_input.set(mt.log(f_num, 10))
+
+def button_equal():
+    input_text = number_input.get()
+    if input_text == "":
+        return None
+    split_text = input_text.split(" ")
+    if not split_text[0].strip().isdigit() and len(split_text) == 1:
+        number_input.set("Insira apenas operandos numéricos")
+        return None
+    elif len(split_text) < 3 or split_text[2] == "":
+        number_input.set("Insira um segundo operando")
+        return None
+    elif not split_text[2].strip().isdigit() or split_text[0].strip().isdigit():
+        number_input.set("Insira apenas operandos numéricos")
+        return None
+    second_number = float(split_text[2])
+    number_input.set(calculate(f_num, second_number, math))
 
 def calculate(f_num, second_number, math): # function that calculates the result
     if math == "addition":
