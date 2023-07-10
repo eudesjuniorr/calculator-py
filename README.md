@@ -16,6 +16,6 @@
 
 **3.** insert the potentiation in cases where the result is so long -- ✓
 
-**4.** solve the problem that the system does not delete the message of error after the user inserts just one number or one number plus signal of operation and clicks on the equal button and before he inserts the numbers again -- loading...
+**4.** solve the problem that the system does not delete the message of error after the user inserts just one number or one number plus signal of operation and clicks on the equal button and before he inserts the numbers again -- ✓
 
 **just this for now**
