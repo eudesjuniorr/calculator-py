@@ -1,12 +1,25 @@
 import tkinter as tk
 from tkinter import ttk # themed tk
 import math as mt
+from functools import wraps
 
 current_operation = "basic" # variable that stores the current operation for the change_operations function
 
-def clear_display():
+def clear_display(): # clears the display
     number_input.set("")
+    
+def clear_error_message(func): # a function that clears the error message
+    @wraps(func) # preserves the original function's name and docstring
+    def wrapper(*args, **kwargs): 
+        current = number_input.get()
+        if current == "Insira um segundo operando" or current == "Não existe fatorial de número negativo" or current == "Insira apenas operandos numéricos" or current == "O resultado é um número complexo":
+            number_input.set("")
+        func(*args, **kwargs)
+        if current == number_input.get() and current != "":
+            number_input.set(current + args[0])  # adds the new number to the current value
+    return wrapper
 
+@clear_error_message
 def add_number(number):
     current = number_input.get()
     number_input.set(str(current) + str(number))
@@ -18,6 +31,7 @@ def number_negative_positive(): # inverts the sign of the number
     else:
         number_input.set(("-" + str(current)))
 
+@clear_error_message
 def button_add():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -29,6 +43,7 @@ def button_add():
         f_num = first_number
         number_input.set(str(f_num) + " + ")
 
+@clear_error_message
 def button_subtract():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -40,6 +55,7 @@ def button_subtract():
         f_num = first_number
         number_input.set(str(f_num) + " - ")
 
+@clear_error_message
 def button_multiply():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -51,6 +67,7 @@ def button_multiply():
         f_num = first_number
         number_input.set(str(f_num) + " * ")
 
+@clear_error_message
 def button_divide():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -62,6 +79,7 @@ def button_divide():
         f_num = first_number
         number_input.set(str(f_num) + " / ")
 
+@clear_error_message
 def button_exponentiation():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -73,6 +91,7 @@ def button_exponentiation():
         f_num = first_number
         number_input.set(str(f_num) + " ^ ")
 
+@clear_error_message
 def button_radication():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -84,6 +103,7 @@ def button_radication():
         f_num = first_number
         number_input.set(str(f_num) + " √ ")
 
+@clear_error_message
 def button_percent():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -95,6 +115,7 @@ def button_percent():
         f_num = first_number
         number_input.set(str(f_num) + " % ")
 
+@clear_error_message
 def button_fraction():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -106,6 +127,7 @@ def button_fraction():
         f_num = first_number
         number_input.set(1 / f_num)
 
+@clear_error_message
 def button_factorial():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -124,6 +146,7 @@ def button_factorial():
             if float(number_input.get()) > 1231344554367656:
                 number_input.set(format(float(number_input.get()), ".2e"))
 
+@clear_error_message
 def button_log():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
@@ -137,7 +160,7 @@ def button_log():
             number_input.set("O resultado é um número complexo")
         else:
             number_input.set(mt.log(f_num, 10))
-
+            
 def button_equal():
     input_text = number_input.get()
     if input_text == "":
