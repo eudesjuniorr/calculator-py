@@ -120,7 +120,9 @@ def button_factorial():
             number_input.set("Não existe fatorial de número negativo")
         else:
             for i in range(1, int(f_num) + 1):
-                number_input.set(int(number_input.get()) * i)
+                number_input.set(float(number_input.get()) * i)
+            if float(number_input.get()) > 1231344554367656:
+                number_input.set(format(float(number_input.get()), ".2e"))
 
 def button_log():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
