@@ -3,10 +3,13 @@ from tkinter import ttk # themed tk
 import math as mt
 from functools import wraps
 
+calc_history = [] # list that stores the history of operations
+history_text = ""
 current_operation = "basic" # variable that stores the current operation for the change_operations function
 
 def clear_display(): # clears the display
     number_input.set("")
+    calc_history.clear()
     
 def clear_error_message(func): # a function that clears the error message
     @wraps(func) # preserves the original function's name and docstring
@@ -19,10 +22,21 @@ def clear_error_message(func): # a function that clears the error message
             number_input.set(current + args[0])  # adds the new number to the current value
     return wrapper
 
+def add_to_history(calculation):
+    global history_text
+    calc_history.append(calculation)
+    if len(calc_history) > 1:
+        calc_history.pop(0) # removes the first element of the list if the list has more than 4 elements
+    history_text = "\n".join(calc_history)
+    
+def update_history_label():
+    history_label.config(text=history_text)
+
 @clear_error_message
 def add_number(number):
     current = number_input.get()
     number_input.set(str(current) + str(number))
+    update_history_label()
 
 def number_negative_positive(): # inverts the sign of the number
     current = number_input.get()
@@ -42,6 +56,8 @@ def button_add():
         math = "addition"
         f_num = first_number
         number_input.set(str(f_num) + " + ")
+        calculation = f"{f_num} +"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_subtract():
@@ -54,6 +70,8 @@ def button_subtract():
         math = "subtraction"
         f_num = first_number
         number_input.set(str(f_num) + " - ")
+        calculation = f"{f_num} -"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_multiply():
@@ -66,6 +84,8 @@ def button_multiply():
         math = "multiplication"
         f_num = first_number
         number_input.set(str(f_num) + " * ")
+        calculation = f"{f_num} *"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_divide():
@@ -78,6 +98,8 @@ def button_divide():
         math = "division"
         f_num = first_number
         number_input.set(str(f_num) + " / ")
+        calculation = f"{f_num} /"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_exponentiation():
@@ -90,6 +112,8 @@ def button_exponentiation():
         math = "exponentiation"
         f_num = first_number
         number_input.set(str(f_num) + " ^ ")
+        calculation = f"{f_num} ^"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_radication():
@@ -102,6 +126,8 @@ def button_radication():
         math = "radication"
         f_num = first_number
         number_input.set(str(f_num) + " √ ")
+        calculation = f"{f_num} √"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_percent():
@@ -114,6 +140,8 @@ def button_percent():
         math = "percent"
         f_num = first_number
         number_input.set(str(f_num) + " % ")
+        calculation = f"{f_num} %"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_fraction():
@@ -126,6 +154,8 @@ def button_fraction():
         math = "fraction"
         f_num = first_number
         number_input.set(1 / f_num)
+        calculation = f"{f_num} 1/x"
+        add_to_history(calculation)
 
 @clear_error_message
 def button_factorial():
@@ -143,8 +173,12 @@ def button_factorial():
         else:
             for i in range(1, int(f_num) + 1):
                 number_input.set(float(number_input.get()) * i)
+                result = float(number_input.get())
             if float(number_input.get()) > 1231344554367656:
                 number_input.set(format(float(number_input.get()), ".2e"))
+            calculation = "O resultado do fatorial de {} é {}".format(f_num, str(result))
+            add_to_history(calculation)
+            update_history_label()
 
 @clear_error_message
 def button_log():
@@ -160,6 +194,8 @@ def button_log():
             number_input.set("O resultado é um número complexo")
         else:
             number_input.set(mt.log(f_num, 10))
+            calculation = f"log {f_num}"
+            add_to_history(calculation)
             
 def button_equal():
     input_text = number_input.get()
@@ -176,7 +212,10 @@ def button_equal():
         number_input.set("Insira apenas operandos numéricos")
         return None
     second_number = float(split_text[2])
+    calculation = f"{f_num} {math} {second_number} = {calculate(f_num, second_number, math)}"
+    add_to_history(calculation)
     number_input.set(calculate(f_num, second_number, math))
+    update_history_label()
 
 def calculate(f_num, second_number, math): # function that calculates the result
     if math == "addition":
@@ -234,76 +273,82 @@ style.theme_use("vista")
 # make the window not resizable
 root.resizable(False, False)
 
+# disply of the calculation history
+history_label = ttk.Label(root, font=("Helvetica", 9), width=55, anchor="e", background="#f0f0f0", relief="groove")
+history_label.grid(row=0, column=0, columnspan=5, padx=10, pady=(10, 0), ipady=7)
+
 # display
 number_input = tk.StringVar()
 display = ttk.Entry(root, font=("Helvetica", 14), width=35, justify="right", textvariable=number_input, state="readonly")
-display.grid(row=0, column=0, columnspan=5, padx=10, pady=10, ipady=7)
+display.grid(row=1, column=0, columnspan=5, padx=10, pady=10, ipady=7)
+
+update_history_label()
 
 # line 1
 btn_7 = ttk.Button(root, text="7", width=10, command=lambda: add_number(7))
-btn_7.grid(row=1, column=0)
+btn_7.grid(row=2, column=0)
 
 btn_8 = ttk.Button(root, text="8", width=10, command=lambda: add_number(8))
-btn_8.grid(row=1, column=1)
+btn_8.grid(row=2, column=1)
 
 btn_9 = ttk.Button(root, text="9", width=10, command=lambda: add_number(9))
-btn_9.grid(row=1, column=2)
+btn_9.grid(row=2, column=2)
 
 btn_add = ttk.Button(root, text="+", width=11, command=button_add)
-btn_add.grid(row=1, column=3, sticky="w")
+btn_add.grid(row=2, column=3, sticky="w")
 
 btn_sub = ttk.Button(root, text="-", width=11, command=button_subtract)
-btn_sub.grid(row=1, column=3, sticky="e")
+btn_sub.grid(row=2, column=3, sticky="e")
 
 btn_nnp = ttk.Button(root, text="+/-", width=5, command=number_negative_positive)
-btn_nnp.grid(row=1, column=4, rowspan=2, sticky="nsew")
+btn_nnp.grid(row=2, column=4, rowspan=2, sticky="nsew")
 
 # line 2
 btn_4 = ttk.Button(root, text="4", width=10, command=lambda: add_number(4))
-btn_4.grid(row=2, column=0)
+btn_4.grid(row=3, column=0)
 
 btn_5 = ttk.Button(root, text="5", width=10, command=lambda: add_number(5))
-btn_5.grid(row=2, column=1)
+btn_5.grid(row=3, column=1)
 
 btn_6 = ttk.Button(root, text="6", width=10, command=lambda: add_number(6))
-btn_6.grid(row=2, column=2)
+btn_6.grid(row=3, column=2)
 
 btn_mult = ttk.Button(root, text="*", width=11, command=button_multiply)
-btn_mult.grid(row=2, column=3, sticky="w")
+btn_mult.grid(row=3, column=3, sticky="w")
 
 btn_div = ttk.Button(root, text="/", width=11, command=button_divide)
-btn_div.grid(row=2, column=3, sticky="e")
+btn_div.grid(row=3, column=3, sticky="e")
 
 # line 3
 btn_1 = ttk.Button(root, text="1", width=10, command=lambda: add_number(1))
-btn_1.grid(row=3, column=0)
+btn_1.grid(row=4, column=0)
 
 btn_2 = ttk.Button(root, text="2", width=10, command=lambda: add_number(2))
-btn_2.grid(row=3, column=1)
+btn_2.grid(row=4, column=1)
 
 btn_3 = ttk.Button(root, text="3", width=10, command=lambda: add_number(3))
-btn_3.grid(row=3, column=2)
+btn_3.grid(row=4, column=2)
 
 btn_exp = ttk.Button(root, text="x^y", width=11, command=button_exponentiation)
-btn_exp.grid(row=3, column=3, sticky="w")
+btn_exp.grid(row=4, column=3, sticky="w")
 
 btn_rad = ttk.Button(root, text="√^y", width=11, command=button_radication)
-btn_rad.grid(row=3, column=3, sticky="e")
+btn_rad.grid(row=4, column=3, sticky="e")
 
 btn_co = ttk.Button(root, text="mode", width=5, command=change_operations)
-btn_co.grid(row=3, column=4, rowspan=2, sticky="nsew")
+btn_co.grid(row=4, column=4, rowspan=2, sticky="nsew")
 
 # line 4
 btn_clear = ttk.Button(root, text="Clear", width=10, command=clear_display)
-btn_clear.grid(row=4, column=0, columnspan=1)
+btn_clear.grid(row=5, column=0, columnspan=1)
 
 btn_0 = ttk.Button(root, text="0", width=10, command=lambda: add_number(0))
-btn_0.grid(row=4, column=1)
+btn_0.grid(row=5, column=1)
 
 btn_clear = ttk.Button(root, text=".", width=10, command=lambda: add_number("."))
-btn_clear.grid(row=4, column=2)
+btn_clear.grid(row=5, column=2)
 
 btn_equal = ttk.Button(root, text="=", width=24, command=button_equal)
-btn_equal.grid(row=4, column=3)
+btn_equal.grid(row=5, column=3)
 
 root.mainloop()
