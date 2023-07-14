@@ -25,8 +25,8 @@ def clear_error_message(func): # a function that clears the error message
 def add_to_history(calculation):
     global history_text
     calc_history.append(calculation)
-    if len(calc_history) > 1:
-        calc_history.pop(0) # removes the first element of the list if the list has more than 4 elements
+    if len(calc_history) > 1: # removes the first element of the list if the list has more than 1 element
+        calc_history.pop(0)
     history_text = "\n".join(calc_history)
     
 def update_history_label():
@@ -154,8 +154,9 @@ def button_fraction():
         math = "fraction"
         f_num = first_number
         number_input.set(1 / f_num)
-        calculation = f"{f_num} 1/x"
+        calculation = 'O resultado da fração de 1.0/{} é {}'.format(f_num, number_input.get())
         add_to_history(calculation)
+        update_history_label()
 
 @clear_error_message
 def button_factorial():
@@ -176,9 +177,14 @@ def button_factorial():
                 result = float(number_input.get())
             if float(number_input.get()) > 1231344554367656:
                 number_input.set(format(float(number_input.get()), ".2e"))
-            calculation = "O resultado do fatorial de {} é {}".format(f_num, str(result))
-            add_to_history(calculation)
-            update_history_label()
+            if str(result) == 'inf':
+                calculation = "O resultado do fatorial de {} é infinito".format(f_num)
+                add_to_history(calculation)
+                update_history_label()
+            else:
+                calculation = "O resultado do fatorial de {} é {}".format(f_num, str(result))
+                add_to_history(calculation)
+                update_history_label()
 
 @clear_error_message
 def button_log():
@@ -192,10 +198,13 @@ def button_log():
         f_num = first_number
         if f_num < 0:
             number_input.set("O resultado é um número complexo")
+            add_to_history("O resultado é um número complexo")
+            update_history_label()
         else:
             number_input.set(mt.log(f_num, 10))
-            calculation = f"log {f_num}"
+            calculation = 'O resultado do logarítimo {} na base 10 é {}'.format(f_num, number_input.get())
             add_to_history(calculation)
+            update_history_label()
             
 def button_equal():
     input_text = number_input.get()
