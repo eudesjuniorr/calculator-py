@@ -15,11 +15,11 @@ def clear_error_message(func): # a function that clears the error message
     @wraps(func) # preserves the original function's name and docstring
     def wrapper(*args, **kwargs): 
         current = number_input.get()
-        if current == "Insira um segundo operando" or current == "Não existe fatorial de número negativo" or current == "Insira apenas operandos numéricos" or current == "O resultado é um número complexo":
+        if current == "Insira um segundo operando" or current == "Não existe fatorial de número negativo" or current == "Insira apenas operandos numéricos" or current == "O resultado é um número complexo" or current == "Faça apenas uma operação por vez":
             number_input.set("")
         func(*args, **kwargs)
         if current == number_input.get() and current != "":
-            number_input.set(current + args[0])  # adds the new number to the current value
+            number_input.set("")  # adds the new number to the current value
     return wrapper
 
 def add_to_history(calculation):
@@ -36,7 +36,6 @@ def update_history_label():
 def add_number(number):
     current = number_input.get()
     number_input.set(str(current) + str(number))
-    update_history_label()
 
 def number_negative_positive(): # inverts the sign of the number
     current = number_input.get()
@@ -50,28 +49,30 @@ def button_add():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
     else:
-        first_number = float(number_input.get())
-        global f_num
-        global math
-        math = "addition"
-        f_num = first_number
-        number_input.set(str(f_num) + " + ")
-        calculation = f"{f_num} +"
-        add_to_history(calculation)
+        if len(number_input.get()) > 2 and number_input.get().isdigit() == False:
+            number_input.set('Faça apenas uma operação por vez')
+        else:
+            first_number = float(number_input.get())
+            global f_num
+            global math
+            math = "addition"
+            f_num = first_number
+            number_input.set(str(f_num) + " + ")
 
 @clear_error_message
 def button_subtract():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
     else:
-        first_number = float(number_input.get())
-        global f_num
-        global math
-        math = "subtraction"
-        f_num = first_number
-        number_input.set(str(f_num) + " - ")
-        calculation = f"{f_num} -"
-        add_to_history(calculation)
+        if len(number_input.get()) > 2 and number_input.get().isdigit() == False:
+            number_input.set('Faça apenas uma operação por vez')
+        else:
+            first_number = float(number_input.get())
+            global f_num
+            global math
+            math = "subtraction"
+            f_num = first_number
+            number_input.set(str(f_num) + " - ")
 
 @clear_error_message
 def button_multiply():
@@ -84,8 +85,6 @@ def button_multiply():
         math = "multiplication"
         f_num = first_number
         number_input.set(str(f_num) + " * ")
-        calculation = f"{f_num} *"
-        add_to_history(calculation)
 
 @clear_error_message
 def button_divide():
@@ -98,8 +97,6 @@ def button_divide():
         math = "division"
         f_num = first_number
         number_input.set(str(f_num) + " / ")
-        calculation = f"{f_num} /"
-        add_to_history(calculation)
 
 @clear_error_message
 def button_exponentiation():
@@ -112,8 +109,6 @@ def button_exponentiation():
         math = "exponentiation"
         f_num = first_number
         number_input.set(str(f_num) + " ^ ")
-        calculation = f"{f_num} ^"
-        add_to_history(calculation)
 
 @clear_error_message
 def button_radication():
@@ -126,8 +121,6 @@ def button_radication():
         math = "radication"
         f_num = first_number
         number_input.set(str(f_num) + " √ ")
-        calculation = f"{f_num} √"
-        add_to_history(calculation)
 
 @clear_error_message
 def button_percent():
@@ -140,8 +133,6 @@ def button_percent():
         math = "percent"
         f_num = first_number
         number_input.set(str(f_num) + " % ")
-        calculation = f"{f_num} %"
-        add_to_history(calculation)
 
 @clear_error_message
 def button_fraction():
@@ -221,7 +212,7 @@ def button_equal():
         number_input.set("Insira apenas operandos numéricos")
         return None
     second_number = float(split_text[2])
-    calculation = f"{f_num} {math} {second_number} = {calculate(f_num, second_number, math)}"
+    calculation = f"{f_num} {math} {second_number} = {calculate(f_num, second_number, math)}" # string that stores the calculation in the history
     add_to_history(calculation)
     number_input.set(calculate(f_num, second_number, math))
     update_history_label()
