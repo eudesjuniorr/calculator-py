@@ -29,8 +29,10 @@ creating a calculator using only python
 
 **5.3** solve the problem of the log -- ✓
 
-**6.** solve the problem that shows just the first number plus the signal of operation in the history of calculation before the user finishes the operation and clicks the equal button -- loading...
+**6.** solve the problem that shows just the first number plus the signal of operation in the history of calculation before the user finishes the operation and clicks the equal button -- ✓
 
 **7.** solve the problem that shows "inf" at the history display when the result is too long -- ✓
+
+**8.** fix the problem that shows the error message when the user tries two operations at the same time, for example, 2 + 2 + 2 -- loading...
 
 **just this for now**
