@@ -49,30 +49,26 @@ def button_add():
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
     else:
-        if len(number_input.get()) > 2 and number_input.get().isdigit() == False:
-            number_input.set('Faça apenas uma operação por vez')
-        else:
-            first_number = float(number_input.get())
-            global f_num
-            global math
-            math = "addition"
-            f_num = first_number
-            number_input.set(str(f_num) + " + ")
+        first_number = float(number_input.get())
+        global f_num
+        global math
+        math = "addition"
+        f_num = first_number
+        number_input.set(str(f_num) + " + ")
 
 @clear_error_message
 def button_subtract():
+    global f_num
+    global second_number
     if number_input.get() == "" or number_input.get() == "-" or number_input.get() == "." or number_input.get() == "-.":
         return None
     else:
-        if len(number_input.get()) > 2 and number_input.get().isdigit() == False:
-            number_input.set('Faça apenas uma operação por vez')
-        else:
-            first_number = float(number_input.get())
-            global f_num
-            global math
-            math = "subtraction"
-            f_num = first_number
-            number_input.set(str(f_num) + " - ")
+        global f_num
+        global math
+        first_number = float(number_input.get())
+        math = "subtraction"
+        f_num = first_number
+        number_input.set(str(f_num) + " - ")
 
 @clear_error_message
 def button_multiply():
@@ -262,6 +258,17 @@ def change_operations():
         btn_div.config(text="/")
         btn_div.config(command=button_divide)
         current_operation = "basic"
+        
+def handle_keypress(event): # FIXME: function that handles the keypress. More things still need to be added
+    key = event.char
+    if key.isdigit() or key in "+-*/.()" or key == "\x10":
+        add_number(key)
+    elif key == "=" or key == "\r":
+        button_equal()
+    elif key == "c" or key == "\x08":
+        clear_display()
+    elif key == "x":
+        change_operations()
 
 root = tk.Tk()
 root.title("Calculadora")
@@ -350,5 +357,8 @@ btn_clear.grid(row=5, column=2)
 
 btn_equal = ttk.Button(root, text="=", width=24, command=button_equal)
 btn_equal.grid(row=5, column=3)
+
+
+root.bind("<Key>", handle_keypress)
 
 root.mainloop()
