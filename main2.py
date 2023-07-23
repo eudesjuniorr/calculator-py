@@ -259,16 +259,33 @@ def change_operations():
         btn_div.config(command=button_divide)
         current_operation = "basic"
         
-def handle_keypress(event): # FIXME: function that handles the keypress. More things still need to be added
+def handle_keypress(event): # TODO: was added to the maximum number of keys that was possible. The other keys were ignored because it was not possible to add them.
     key = event.char
-    if key.isdigit() or key in "+-*/.()" or key == "\x10":
+    keysym = event.keysym
+    
+    if keysym == "Shift_L" or keysym == "Shift_R": # ignores the shift key
+        return
+    if key.isdigit() or key in ".":
         add_number(key)
+    elif key == "+":
+        button_add()
+    elif key == "-":
+        button_subtract()
+    elif key == "*":
+        button_multiply()
+    elif key == "/":
+        button_divide()
+    elif key == "%":
+        button_percent()
     elif key == "=" or key == "\r":
         button_equal()
     elif key == "c" or key == "\x08":
         clear_display()
     elif key == "x":
         change_operations()
+    elif key == "n":
+        number_negative_positive()
+        
 
 root = tk.Tk()
 root.title("Calculadora")
