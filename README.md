@@ -33,6 +33,8 @@ creating a calculator using only python
 
 **7.** solve the problem that shows "inf" at the history display when the result is too long -- ✓
 
-**8.** fix the problem that shows the error message when the user tries two operations at the same time, for example, 2 + 2 + 2 -- loading...
+**8.** fix the problem that shows the error message when the user tries make two operations at the same time, for example, 2 + 2 + 2 -- loading...
+
+**9.** upgrade the handle_keyrpess function to make the calculator more intuitive and make work it-- loading...
 
 **just this for now**
