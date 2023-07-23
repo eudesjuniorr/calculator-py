@@ -263,7 +263,7 @@ def handle_keypress(event): # TODO: was added to the maximum number of keys that
     key = event.char
     keysym = event.keysym
     
-    if keysym == "Shift_L" or keysym == "Shift_R": # ignores the shift key
+    if keysym == "Shift_L" or keysym == "Shift_R": # ignores the shift key to prevent errors messages when it is pressed to add the "+" or others signs
         return
     if key.isdigit() or key in ".":
         add_number(key)
